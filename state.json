@@ -4,8 +4,8 @@
     "preparation-poste-pci": {
       "items": {
         "S1": {
-          "status": null,
-          "doneAt": null,
+          "status": "done",
+          "doneAt": "2026-09-24T12:38:46.488Z",
           "skippedAt": null,
           "version": 1
         }
@@ -14,5 +14,5 @@
       "moves": {}
     }
   },
-  "lastUpdated": "2026-09-24T12:38:45.976Z"
+  "lastUpdated": "2026-09-24T12:38:47.369Z"
 }
