@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "projects": {
+    "preparation-poste-pci": {
+      "items": {
+        "S1": {
+          "status": "done",
+          "doneAt": "2026-09-24T12:38:31.526Z",
+          "skippedAt": null,
+          "version": 1
+        }
+      },
+      "deliverables": {},
+      "moves": {}
+    }
+  },
+  "lastUpdated": "2026-09-24T12:38:32.368Z"
+}
