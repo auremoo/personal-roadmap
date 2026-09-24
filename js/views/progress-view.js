@@ -44,7 +44,7 @@ export function mount(container, slug) {
 
 function render(root, slug) {
   const s = projectSummary(slug);
-  const { plan, weeks, states, counts, current, pace } = s;
+  const { plan, weeks, states, counts, current, overdue } = s;
   const all = weeks.flatMap(w => w.items);
   const delivStates = getDeliverableStates(slug);
   const delivDone = plan.deliverables.filter(d => delivStates[d.id]?.done).length;
@@ -57,10 +57,10 @@ function render(root, slug) {
 
   root.innerHTML = `
     <div class="kpis">
-      ${kpi('Avancement', `${counts.pct} %`, `${counts.done} / ${counts.total} items faits`)}
+      ${kpi('Avancement', `${counts.pct} %`, `${counts.done}/${counts.total} faits${counts.skipped ? ` · ${counts.skipped} sauté${counts.skipped > 1 ? 's' : ''}` : ''}`)}
       ${kpi('Semaine', weekLabel, s.week?.start ? formatRange(s.week.start, s.week.end) : '')}
-      ${kpi('Rythme', pace.label, 'items traités vs attendus', pace.tone)}
-      ${kpi('Livrables', `${delivDone} / ${plan.deliverables.length}`, counts.skipped ? `${counts.skipped} item${counts.skipped > 1 ? 's' : ''} sauté${counts.skipped > 1 ? 's' : ''}` : 'aucun item sauté')}
+      ${kpi('À rattraper', overdue.length ? String(overdue.length) : 'À jour', overdue.length ? 'items des semaines passées' : 'rien en attente', overdue.length ? (overdue.length >= 3 ? 'bad' : 'warn') : 'ok')}
+      ${kpi('Livrables', `${delivDone} / ${plan.deliverables.length}`, plan.deliverables.length ? 'à cocher en bas de page' : 'aucun livrable déclaré')}
     </div>
 
     <div class="progress-columns">
@@ -85,7 +85,8 @@ function render(root, slug) {
         <div class="legend">
           <span><i class="dot dot--done"></i>Fait</span>
           <span><i class="dot dot--skipped"></i>Sauté</span>
-          <span><i class="dot dot--todo"></i>Prévu</span>
+          <span><i class="dot dot--todo"></i>Reste à faire</span>
+          <span class="legend__hint">Clique sur une barre pour ouvrir la semaine</span>
         </div>
       </section>
 
@@ -118,7 +119,7 @@ function render(root, slug) {
             const due = w ? `${d.due} · W${pad(w.number)}${w.start ? ' · ' + formatDateShort(w.end) : ''}` : d.due;
             return `
               <button class="deliverable ${done ? 'deliverable--done' : ''}" data-deliv="${esc(d.id)}">
-                <span class="check ${done ? 'check--on' : ''}">${ICONS.check}</span>
+                <span class="round round--done ${done ? 'is-on' : ''}">${ICONS.check}</span>
                 <span class="deliverable__body">
                   <span class="deliverable__title">${esc(d.title)}</span>
                   <span class="small muted">${esc(due)}${d.note ? ` — ${esc(d.note)}` : ''}</span>

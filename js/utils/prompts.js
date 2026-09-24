@@ -2,7 +2,7 @@
 // et les données du projet ; la réponse de l'IA est un .md importable (onglet Versions).
 
 import { getProfile, getProjectMeta, getActivePlan, getActivePlanRaw, getItemStates, getMoves, getDeliverableStates } from '../store.js';
-import { effectiveWeeks, currentWeek, countStatus, paceOf } from './progress.js';
+import { effectiveWeeks, currentWeek, countStatus, paceOf, overdueItems } from './progress.js';
 import { today } from './dates.js';
 
 const pad = n => String(n).padStart(2, '0');
@@ -190,7 +190,8 @@ ${projectSection(meta)}
 
 - Semaine ${cur.number ?? '?'} / ${weeks.length}${cur.phase === 'before' ? ' (pas encore commencé)' : cur.phase === 'after' ? ' (période terminée)' : ''}
 - Items faits : **${c.done} / ${c.total} (${c.pct} %)**${c.skipped ? ` · sautés : **${c.skipped}**` : ''}
-- Rythme : **${pace.label}** (items traités vs attendus à date)
+- Rythme : **${pace.label}** (items faits ou sautés vs prévus à date)
+- Items des semaines passées ni faits ni sautés : **${overdueItems(weeks, states, todayStr).length}**
 
 ### Par bloc
 ${blockLines || '- (aucun bloc déclaré)'}

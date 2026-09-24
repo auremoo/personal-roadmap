@@ -14,27 +14,27 @@ Fonctionne sans serveur : toutes les données sont stockées dans ce dépôt Git
 1. **Créer un projet** : nom, objectif, contexte, période, rythme (ex. 5 séances de 1 h 30 par semaine). Un brouillon existant peut être collé dans « Matière existante ». Si tu as déjà une roadmap au bon format, « Tu as déjà une roadmap (.md) ? » pré-remplit le formulaire et l'importe directement comme v1 (étapes 2 et 3 inutiles).
 2. **Générer le prompt initial** (onglet Versions) : il contient ton profil (Réglages), le projet, le brouillon et le format attendu. Tu l'envoies à ton IA.
 3. **Importer la réponse** : colle le texte ou choisis le fichier .md. L'app vérifie le format et annonce ce qu'elle a lu (semaines, items, blocs, livrables).
-4. **Avancer** : chaque semaine, coche les items faits, marque ceux que tu sautes, déplace ceux que tu reportes, ajoute des notes.
+4. **Avancer** : chaque item a deux ronds, comme dans Pacing : ✓ fait, ✕ sauté ; vides = à faire (recliquer annule). Le détail d'un item permet d'ajouter une note ou de le reporter à une autre semaine. Les items des semaines passées ni faits ni sautés apparaissent « à rattraper ».
 5. **Réviser** : le prompt de révision embarque le bilan réel (faits, sautés, déplacés, notes, rythme, livrables) et la roadmap en cours. La réponse devient la version suivante ; les anciennes restent consultables et réactivables.
 
 ## Écrans
 
 | Écran | Contenu |
 |---|---|
-| Accueil | La semaine en cours de chaque projet actif, cochable sur place, avec l'avance ou le retard |
+| Accueil | La semaine en cours de chaque projet actif, cochable sur place, et le nombre d'items à rattraper |
 | Projets | Tous les projets (actifs, en pause, terminés) |
-| Projet › Plan | Frise des semaines + items de la semaine ; recherche, filtre par bloc |
+| Projet › Plan | Frise des semaines + items de la semaine ; recherche, filtre par bloc ou « à rattraper » |
 | Projet › Avancement | Indicateurs, histogramme par semaine, avancement par bloc, livrables à cocher |
 | Projet › Versions | Prompts IA, import, historique des versions |
 | Projet › Infos | Fiche du projet (modifiable) et sections libres de la roadmap (cadre, points à vérifier, sources) |
 | Réglages | Profil injecté dans les prompts, déconnexion |
 
-**Ordinateur (≥ 900 px)** : sidebar permanente, onglets sous l'en-tête, frise verticale des semaines, détail d'un item en tiroir à droite. Raccourcis dans le plan : `←` `→` changer de semaine, `/` chercher, `Entrée` ouvrir l'item sélectionné, `Espace` le cocher, `Échap` fermer.
+**Ordinateur (≥ 900 px)** : sidebar permanente, onglets sous l'en-tête, frise verticale des semaines, détail d'un item en tiroir à droite. Raccourcis dans le plan : `←` `→` changer de semaine (ou d'item dans le détail), `/` chercher, et sur un item sélectionné (Tab) : `Entrée` ouvrir, `Espace` fait, `X` sauté, `Échap` fermer.
 **Téléphone** : menu en bas, frise horizontale, détail en feuille du bas.
 
-## Rythme (avance / retard)
+## À rattraper
 
-Items traités (faits + sautés) comparés aux items attendus à date : semaines écoulées en entier + prorata de la semaine en cours.
+Un item est « à rattraper » quand sa semaine est terminée et qu'il n'est ni fait ni sauté. Le prompt de révision transmet aussi le rythme global (items traités comparés aux items prévus à date).
 
 ## Format des roadmaps
 

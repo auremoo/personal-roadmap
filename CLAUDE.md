@@ -30,9 +30,9 @@ js/views/
   infos-view.js       fiche projet + sections libres de la roadmap
   project-form.js     création / modification d'un projet ; création possible depuis un .md (META → formulaire, import en v1)
   settings.js         profil (profile.json) + déconnexion
-  item-ui.js          ligne d'item + panneau de détail (statut, note, déplacement)
+  item-ui.js          ligne d'item (deux ronds : ✓ fait / ✕ sauté, vides = à faire) + panneau de détail (statut, note, report)
 js/utils/
-  progress.js         effectiveWeeks (applique les déplacements), currentWeek, countStatus, paceOf, projectSummary
+  progress.js         effectiveWeeks (applique les déplacements), currentWeek, countStatus, isOverdue/overdueItems (« à rattraper »), paceOf (prompt de révision), projectSummary
   prompts.js          buildInitialPrompt / buildRevisionPrompt / formatTemplate
   ui.js               esc, openSheet (feuille mobile / tiroir ordinateur), openPromptModal, ICONS
   dates.js, markdown.js, crypto.js (repris de Pacing)

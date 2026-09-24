@@ -50,6 +50,6 @@ function projectCard(p) {
           ${progressBar(s.counts.pct)}
           <span class="small">${s.counts.pct} %</span>
         </div>
-        <div class="small muted">${s.pace.label}</div>` : ''}
+        ${s.overdue.length ? `<div class="small late-text">${s.overdue.length} à rattraper</div>` : ''}` : ''}
     </article>`;
 }

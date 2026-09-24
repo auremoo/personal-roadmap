@@ -1,6 +1,6 @@
 // Personal Roadmap — Auteur : Aurélien Moote - Moo - 2026 — Licence MIT
 // SW version — bump this to force cache clear on all clients
-const SW_VERSION = '1';
+const SW_VERSION = '2';
 
 self.addEventListener('install', () => self.skipWaiting());
 

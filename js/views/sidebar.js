@@ -71,7 +71,7 @@ function projectItem(p, activeSlug) {
   return `
     <button class="sb-project ${p.slug === activeSlug ? 'sb-project--active' : ''}" data-nav="/project/${p.slug}">
       <div class="sb-project__name">${esc(p.name)}</div>
-      <div class="sb-project__meta">${sub}${s ? ` · ${s.counts.pct} %` : ''}</div>
+      <div class="sb-project__meta">${sub}${s ? ` · ${s.counts.pct} %` : ''}${s?.overdue.length ? ` · <span class="sb-project__late">${s.overdue.length} à rattraper</span>` : ''}</div>
       ${s ? progressBar(s.counts.pct, 'bar--thin') : ''}
     </button>`;
 }

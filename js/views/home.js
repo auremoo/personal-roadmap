@@ -5,12 +5,17 @@ import { projectSummary, isActiveProject, blockMap } from '../utils/progress.js'
 import { today, formatDate, formatRange } from '../utils/dates.js';
 import { esc, progressBar } from '../utils/ui.js';
 import { topbar, globalTabBar } from './chrome.js';
-import { renderItemRow, bindItemRows } from './item-ui.js';
+import { renderItemRow, bindItemRows, refocusItem } from './item-ui.js';
+import { showLate } from './plan-view.js';
 
 export function mount(container) {
   container.innerHTML = `<div class="view"></div>`;
   const root = container.firstElementChild;
-  bindItemRows(root, () => render(root));
+  bindItemRows(root, focusId => { render(root); refocusItem(root, focusId); });
+  root.addEventListener('click', e => {
+    const late = e.target.closest('[data-late]');
+    if (late) { showLate(late.dataset.late); location.hash = `/project/${late.dataset.late}/plan`; }
+  });
   render(root);
 }
 
@@ -51,18 +56,25 @@ function weekCard(p, s) {
           <button class="card__title link-like" data-nav="/project/${p.slug}">${esc(p.name)}</button>
           <div class="muted small">${heading}</div>
         </div>
-        <span class="pill pill--${s.pace.tone}">${s.pace.label}</span>
+        ${s.current.phase === 'during' ? (s.overdue.length
+          ? `<span class="pill pill--${s.overdue.length >= 3 ? 'bad' : 'warn'}">${s.overdue.length} à rattraper</span>`
+          : '<span class="pill pill--ok">À jour</span>') : ''}
       </header>
       ${meta?.objective ? `<p class="week-card__objective">${esc(meta.objective)}</p>` : ''}
       ${w.note ? `<p class="week-card__note">${esc(w.note)}</p>` : ''}
       <div class="week-card__progress">
-        <span class="small muted">Semaine : ${wc.done}/${wc.total}</span>
+        <span class="small muted">Cette semaine ${wc.done + wc.skipped}/${wc.total}</span>
         ${progressBar(wc.total ? (wc.done + wc.skipped) / wc.total * 100 : 0)}
-        <span class="small muted">Global : ${s.counts.pct} %</span>
+        <span class="small muted">Projet ${s.counts.pct} %</span>
       </div>
       <div class="item-list">
-        ${w.items.map(i => renderItemRow(p.slug, i, { blocks, showProduction: false })).join('') || '<p class="muted">Aucun item cette semaine.</p>'}
+        ${w.items.map(i => renderItemRow(p.slug, i, { blocks, week: w, showProduction: false })).join('') || '<p class="muted">Aucun item cette semaine.</p>'}
       </div>
+      ${s.overdue.length ? `
+        <button class="late-banner" data-late="${p.slug}">
+          <strong>${s.overdue.length} item${s.overdue.length > 1 ? 's' : ''} à rattraper</strong>
+          <span>des semaines passées, ni faits ni sautés →</span>
+        </button>` : ''}
     </section>`;
 }
 

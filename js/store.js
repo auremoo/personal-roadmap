@@ -45,6 +45,11 @@ export async function initStore() {
     return meta?.activeVersion ? ensurePlanLoaded(p.slug, meta.activeVersion) : null;
   }));
 
+  // Fermeture de l'onglet avant la fin d'un enregistrement : le navigateur demande confirmation.
+  window.addEventListener('beforeunload', e => {
+    if (_syncTimer || _syncing) { e.preventDefault(); e.returnValue = ''; }
+  });
+
   // Sur mobile, l'app peut être fermée pendant le délai de synchro : on vide la file tout de suite.
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden' && _syncTimer) {

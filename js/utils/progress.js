@@ -45,6 +45,15 @@ export function countStatus(items, states) {
   return { total, done, skipped, todo: total - done - skipped, pct: total ? Math.round(done / total * 100) : 0 };
 }
 
+// Item d'une semaine terminée, ni fait ni sauté.
+export function isOverdue(week, state, todayStr = today()) {
+  return !!(week?.end && week.end < todayStr && !state?.status);
+}
+
+export function overdueItems(weeks, states, todayStr = today()) {
+  return weeks.flatMap(w => w.items.filter(i => isOverdue(w, states[i.id], todayStr)).map(item => ({ item, week: w })));
+}
+
 // Nombre d'items qui "devraient" être traités aujourd'hui : semaines passées
 // en entier + prorata de la semaine en cours.
 export function expectedByNow(weeks, todayStr = today()) {
@@ -63,9 +72,10 @@ export function paceOf(weeks, states, todayStr = today()) {
   const c = countStatus(all, states);
   const delta = Math.round((c.done + c.skipped) - expectedByNow(weeks, todayStr));
   let label, tone;
+  const n = x => `${x} item${x > 1 ? 's' : ''}`;
   if (Math.abs(delta) < 1) { label = 'Dans les temps'; tone = 'ok'; }
-  else if (delta > 0)      { label = `${delta} d'avance`; tone = 'ok'; }
-  else                     { label = `${-delta} de retard`; tone = delta <= -3 ? 'bad' : 'warn'; }
+  else if (delta > 0)      { label = `${n(delta)} d'avance`; tone = 'ok'; }
+  else                     { label = `${n(-delta)} de retard`; tone = delta <= -3 ? 'bad' : 'warn'; }
   return { delta, label, tone };
 }
 
@@ -84,6 +94,7 @@ export function projectSummary(slug) {
     week,
     weekCounts: week ? countStatus(week.items, states) : null,
     pace: paceOf(weeks, states),
+    overdue: overdueItems(weeks, states),
     weekIndex: week ? weeks.indexOf(week) + 1 : 0,
   };
 }
