@@ -51,7 +51,7 @@ generated: ${today()}
 ## BLOCS
 | ID | Nom | Couleur |
 |---|---|---|
-| {ID court, ex : GP} | {Nom du bloc thématique} | {couleur} |
+| {ID court, ex : GR} | {Nom du bloc thématique} | {couleur} |
 
 Couleurs disponibles : gray, blue, indigo, purple, pink, red, orange, yellow, green, teal
 
@@ -61,7 +61,7 @@ Couleurs disponibles : gray, blue, indigo, purple, pink, red, orange, yellow, gr
 ## SEMAINES
 
 ### W{NN} | {YYYY-MM-DD du lundi} | {note courte sur la semaine}
-- {ID item, ex : S1} | {ID du bloc} | {code court, ex : GP1} | {Titre de l'item}
+- {ID item, ex : S1} | {ID du bloc} | {code court, ex : GR1} | {Titre de l'item}
   - Contenu : {ce qu'on voit / ce qu'on fait pendant la séance}
   - Production : {ce qui existe concrètement à la fin de la séance}
 

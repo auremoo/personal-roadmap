@@ -32,6 +32,12 @@ export function parseRoadmap(markdown) {
   return { meta, blocks, deliverables, weeks, info };
 }
 
+// L'IA renvoie souvent le .md dans un bloc ``` : on l'enlève.
+export function stripFence(s) {
+  const m = s.trim().match(/^```[\w-]*\n([\s\S]*?)\n```$/);
+  return (m ? m[1] : s).trim() + '\n';
+}
+
 export function isRoadmapMarkdown(text) {
   return /^## META\s*$/m.test(text) && /^## SEMAINES\s*$/m.test(text);
 }
@@ -114,7 +120,7 @@ function parseDeliverables(content) {
 
 // ── SEMAINES ─────────────────────────────────────────────────────
 // ### W01 | 2026-09-28 | Note
-// - S1 | GP | GP1 | Titre
+// - S1 | GR | GR1 | Titre
 //   - Contenu : …
 //   - Production : …
 

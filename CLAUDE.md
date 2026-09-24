@@ -28,7 +28,7 @@ js/views/
   progress-view.js    KPI, histogramme hebdo, blocs, livrables
   versions-view.js    prompts, import (collage/fichier/glisser-déposer), historique
   infos-view.js       fiche projet + sections libres de la roadmap
-  project-form.js     création / modification d'un projet
+  project-form.js     création / modification d'un projet ; création possible depuis un .md (META → formulaire, import en v1)
   settings.js         profil (profile.json) + déconnexion
   item-ui.js          ligne d'item + panneau de détail (statut, note, déplacement)
 js/utils/

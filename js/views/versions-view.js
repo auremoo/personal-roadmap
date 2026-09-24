@@ -2,7 +2,7 @@
 
 import { getProjectMeta, getActivePlan, importPlanVersion, setActiveVersion, getPlanRaw } from '../store.js';
 import { showToast } from '../app.js';
-import { parseRoadmap, isRoadmapMarkdown } from '../parser.js';
+import { parseRoadmap, isRoadmapMarkdown, stripFence } from '../parser.js';
 import { buildInitialPrompt, buildRevisionPrompt } from '../utils/prompts.js';
 import { esc, openSheet, openPromptModal } from '../utils/ui.js';
 
@@ -176,12 +176,6 @@ function openImportSheet(root, slug, initialText) {
       go.textContent = 'Importer et activer';
     }
   });
-}
-
-// L'IA renvoie souvent le .md dans un bloc ``` : on l'enlève.
-function stripFence(s) {
-  const m = s.trim().match(/^```[\w-]*\n([\s\S]*?)\n```$/);
-  return (m ? m[1] : s).trim() + '\n';
 }
 
 function download(filename, text) {

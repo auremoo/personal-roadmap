@@ -1,6 +1,7 @@
 // Création (/new-project) et modification (/project/:slug/edit) d'un projet.
 
-import { createProject, updateProject, getProjectMeta } from '../store.js';
+import { createProject, updateProject, getProjectMeta, importPlanVersion } from '../store.js';
+import { parseRoadmap, isRoadmapMarkdown, stripFence } from '../parser.js';
 import { navigate, showToast, refreshSidebar } from '../app.js';
 import { weeksBetween, mondayOf, addDays } from '../utils/dates.js';
 import { esc } from '../utils/ui.js';
@@ -28,9 +29,24 @@ export function mount(container, slug) {
       })}
       <main class="page page--narrow">
         <form id="project-form" class="form" autocomplete="off">
+          ${editing ? '' : `
+          <section class="card import-card">
+            <h2 class="card__heading">Tu as déjà une roadmap (.md) ?</h2>
+            <p class="muted small">Le formulaire est pré-rempli à partir de sa section META, et elle est importée comme version 1 à la création du projet.</p>
+            <div class="row-actions">
+              <button type="button" class="btn btn--secondary" id="md-file-btn">Choisir le fichier .md</button>
+              <button type="button" class="btn btn--ghost" id="md-paste-btn">Coller le texte</button>
+            </div>
+            <input type="file" id="md-file" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden>
+            <div id="md-paste" hidden>
+              <textarea class="textarea-field prompt-text" id="md-text" placeholder="# ROADMAP_v1 — …"></textarea>
+              <div class="row-actions"><button type="button" class="btn btn--secondary" id="md-use">Utiliser ce texte</button></div>
+            </div>
+            <div class="import-preview" id="md-status"></div>
+          </section>`}
           <section class="card">
-            ${field('name', 'Nom', { value: meta.name, placeholder: 'Préparation PCI', required: true })}
-            ${editing ? '' : field('slug', 'Identifiant', { value: '', placeholder: 'preparation-pci', hint: 'Nom du dossier dans le dépôt (lettres, chiffres, tirets). Généré à partir du nom.', attrs: 'pattern="[a-z0-9\\-]+"' })}
+            ${field('name', 'Nom', { value: meta.name, placeholder: 'Apprendre l\'espagnol', required: true })}
+            ${editing ? '' : field('slug', 'Identifiant', { value: '', placeholder: 'apprendre-espagnol', hint: 'Nom du dossier dans le dépôt (lettres, chiffres, tirets). Généré à partir du nom.', attrs: 'pattern="[a-z0-9\\-]+"' })}
             ${field('objective', 'Objectif', { type: 'textarea', value: meta.objective, placeholder: 'Ce qui doit être vrai à la fin de la période.' })}
             ${field('context', 'Contexte', { type: 'textarea', value: meta.context, placeholder: 'Pourquoi ce projet, point de départ, enjeux.' })}
           </section>
@@ -67,6 +83,41 @@ export function mount(container, slug) {
 
   const form = container.querySelector('#project-form');
   const $ = id => form.querySelector('#' + id);
+
+  // Roadmap existante : pré-remplit le formulaire, importée comme v1 à la création
+  let pendingMd = null;
+  const loadMarkdown = raw => {
+    const status = $('md-status');
+    const md = stripFence(raw);
+    if (!isRoadmapMarkdown(md)) {
+      pendingMd = null;
+      status.innerHTML = '<span class="error">Format non reconnu : il faut au moins les sections <code>## META</code> et <code>## SEMAINES</code>.</span>';
+      return;
+    }
+    const plan = parseRoadmap(md);
+    const items = plan.weeks.reduce((n, w) => n + w.items.length, 0);
+    if (!items) { pendingMd = null; status.innerHTML = '<span class="error">Aucun item trouvé dans la section SEMAINES.</span>'; return; }
+    const m = plan.meta;
+    const set = (id, v) => { if (v && $(id)) $(id).value = v; };
+    set('name', m.project);
+    if (!slugTouched) set('slug', slugify(m.slug || m.project || ''));
+    set('objective', m.objective);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(m.start || '')) set('startDate', mondayOf(m.start));
+    if (/^\d{4}-\d{2}-\d{2}$/.test(m.end || '')) set('endDate', m.end);
+    set('weeks', m.weeks || String(plan.weeks.length));
+    set('rhythm', m.rhythm);
+    pendingMd = md;
+    $('md-paste').hidden = true;
+    status.innerHTML = `<span class="ok">Roadmap chargée : ${plan.weeks.length} semaines · ${items} items · ${plan.deliverables.length} livrables. Elle sera importée comme version 1.</span>`;
+  };
+  $('md-file-btn')?.addEventListener('click', () => $('md-file').click());
+  $('md-file')?.addEventListener('change', async e => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (file) loadMarkdown(await file.text());
+  });
+  $('md-paste-btn')?.addEventListener('click', () => { $('md-paste').hidden = false; $('md-text').focus(); });
+  $('md-use')?.addEventListener('click', () => loadMarkdown($('md-text').value));
 
   // Identifiant auto tant que l'utilisateur ne l'a pas modifié
   let slugTouched = false;
@@ -119,9 +170,13 @@ export function mount(container, slug) {
         const newSlug = slugify($('slug').value || data.name);
         if (!newSlug) throw new Error('Identifiant invalide');
         await createProject({ slug: newSlug, ...data });
-        showToast('Projet créé', 'success');
+        if (pendingMd) {
+          btn.textContent = 'Import de la roadmap…';
+          await importPlanVersion(newSlug, pendingMd, 'Roadmap initiale');
+        }
+        showToast(pendingMd ? 'Projet créé, roadmap v1 importée' : 'Projet créé', 'success');
         refreshSidebar();
-        navigate(`/project/${newSlug}/versions`);
+        navigate(`/project/${newSlug}/${pendingMd ? 'plan' : 'versions'}`);
       }
     } catch (err) {
       showToast('Erreur : ' + err.message, 'error');

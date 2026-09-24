@@ -3,36 +3,36 @@
 C'est le format que l'IA doit renvoyer. Les prompts générés par l'app (onglet Versions) le rappellent à chaque fois ; ce document sert de référence.
 
 ```
-# ROADMAP_v1 — Préparation PCI
+# ROADMAP_v1 — Apprendre l'espagnol
 
 ## META
-project: Préparation PCI
-slug: preparation-pci
-objective: Arriver début mars chez PCI avec le moins d'écart possible par rapport à la fiche de poste.
-start: 2026-09-28
-end: 2027-02-28
-weeks: 22
-rhythm: 5 séances de 1 h 30 par semaine
+project: Apprendre l'espagnol
+slug: apprendre-espagnol
+objective: Tenir une conversation de 20 minutes sans passer par l'anglais.
+start: 2026-10-05
+end: 2027-01-31
+weeks: 17
+rhythm: 4 séances de 45 min par semaine
 version: 1
 generated: 2026-09-24
 
 ## BLOCS
 | ID | Nom | Couleur |
 |---|---|---|
-| GP | Gestion de projet et budget | blue |
-| I | Ignition | orange |
+| GR | Grammaire | blue |
+| OR | Oral | orange |
 
 ## LIVRABLES
-- L1 | Glossaire FR / FR-QC / EN | S1 | enrichi en continu
-- L2 | Grille de ratios d'estimation | S7
+- L1 | Lexique personnel de 500 mots | S12 | enrichi en continu
+- L2 | Enregistrement d'une présentation de 5 min | S40
 
 ## SEMAINES
 
-### W01 | 2026-09-28 | Démarrage
-- S1 | GP | GP1 | Cycle de vie d'un projet d'intégration
-  - Contenu : avant-vente, octroi, lancement, ingénierie…
-  - Production : schéma du cycle de vie + début du glossaire.
-- S2 | I | I1 | Reprise Ignition
+### W01 | 2026-10-05 | Démarrage
+- S1 | GR | GR1 | Présent de l'indicatif
+  - Contenu : verbes réguliers en -ar, -er, -ir ; ser et estar.
+  - Production : fiche de conjugaison + 20 phrases écrites.
+- S2 | OR | OR1 | Se présenter
   - Contenu : …
   - Production : …
 

@@ -11,7 +11,7 @@ Fonctionne sans serveur : toutes les données sont stockées dans ce dépôt Git
 
 ## Principe
 
-1. **Créer un projet** : nom, objectif, contexte, période, rythme (ex. 5 séances de 1 h 30 par semaine). Un brouillon existant peut être collé dans « Matière existante ».
+1. **Créer un projet** : nom, objectif, contexte, période, rythme (ex. 5 séances de 1 h 30 par semaine). Un brouillon existant peut être collé dans « Matière existante ». Si tu as déjà une roadmap au bon format, « Tu as déjà une roadmap (.md) ? » pré-remplit le formulaire et l'importe directement comme v1 (étapes 2 et 3 inutiles).
 2. **Générer le prompt initial** (onglet Versions) : il contient ton profil (Réglages), le projet, le brouillon et le format attendu. Tu l'envoies à ton IA.
 3. **Importer la réponse** : colle le texte ou choisis le fichier .md. L'app vérifie le format et annonce ce qu'elle a lu (semaines, items, blocs, livrables).
 4. **Avancer** : chaque semaine, coche les items faits, marque ceux que tu sautes, déplace ceux que tu reportes, ajoute des notes.
