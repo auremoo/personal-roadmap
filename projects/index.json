@@ -1,0 +1,11 @@
+{
+  "projects": [
+    {
+      "slug": "preparation-poste-pci",
+      "name": "Préparation poste PCI",
+      "startDate": "2026-09-28",
+      "endDate": "2027-02-28",
+      "status": "active"
+    }
+  ]
+}
