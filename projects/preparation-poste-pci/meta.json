@@ -11,6 +11,13 @@
   "draft": "",
   "status": "active",
   "createdAt": "2026-09-24T12:37:12.750Z",
-  "activeVersion": null,
-  "versions": []
+  "activeVersion": 1,
+  "versions": [
+    {
+      "v": 1,
+      "file": "v1.md",
+      "importedAt": "2026-09-24T12:37:17.537Z",
+      "label": "Roadmap initiale"
+    }
+  ]
 }
