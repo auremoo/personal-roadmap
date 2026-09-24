@@ -1,5 +1,8 @@
 # Personal Roadmap
 
+> Créé par Aurélien Moote - Moo - 2026. Logiciel libre (licence MIT) :
+> réutilisable à condition de conserver la mention de l'auteur.
+
 PWA pour piloter des projets personnels avec une roadmap hebdomadaire : objectifs, items à cocher, avancement, prompts IA et versions successives.
 Sœur de [Pacing App](https://github.com/auremoo/pacing-app) : même principe, mêmes accès, mais pensée autant pour l'ordinateur que pour le téléphone.
 Fonctionne sans serveur : toutes les données sont stockées dans ce dépôt GitHub via l'API.
@@ -64,3 +67,11 @@ Les écritures de `state.json` portent `[skip ci]` pour ne pas redéployer le si
 
 Chaque push sur `main` déclenche GitHub Actions → GitHub Pages. Premier déploiement : Settings → Pages → Source : **GitHub Actions**.
 Sur iPhone : Safari → l'URL → Partager → « Sur l'écran d'accueil ».
+
+---
+
+## Auteur & licence
+
+**Aurélien Moote - Moo - 2026**  
+Copyright (c) 2026 Aurélien Moote ("Moo")  
+Distribué sous [licence MIT](./LICENSE) — réutilisable à condition de conserver la mention de l'auteur.

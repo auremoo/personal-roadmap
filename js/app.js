@@ -1,3 +1,4 @@
+// Personal Roadmap — Auteur : Aurélien Moote - Moo - 2026 — Licence MIT
 import { isAuthenticated, mount as mountLock, PAT_KEY } from './views/lock.js';
 import { mount as mountHome }        from './views/home.js';
 import { mount as mountProjects }    from './views/projects.js';
