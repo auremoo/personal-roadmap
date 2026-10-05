@@ -27,11 +27,17 @@
           "doneAt": "2026-10-05T14:05:36.333Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S7": {
+          "status": "done",
+          "doneAt": "2026-10-05T14:10:51.844Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-10-05T14:05:37.434Z"
+  "lastUpdated": "2026-10-05T14:10:53.299Z"
 }
