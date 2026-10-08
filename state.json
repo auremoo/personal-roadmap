@@ -40,11 +40,17 @@
           "doneAt": "2026-10-05T15:09:36.965Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S9": {
+          "status": "done",
+          "doneAt": "2026-10-08T15:17:11.349Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-10-05T15:13:28.372Z"
+  "lastUpdated": "2026-10-08T15:17:13.067Z"
 }
