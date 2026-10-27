@@ -70,11 +70,23 @@
           "doneAt": "2026-10-27T11:04:36.904Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S22": {
+          "status": "done",
+          "doneAt": "2026-10-27T11:11:27.536Z",
+          "skippedAt": null,
+          "version": 1
+        },
+        "S21": {
+          "status": "done",
+          "doneAt": "2026-10-27T11:11:29.137Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-10-27T11:04:38.957Z"
+  "lastUpdated": "2026-10-27T11:11:29.788Z"
 }
