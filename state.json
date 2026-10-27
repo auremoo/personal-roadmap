@@ -58,11 +58,17 @@
           "doneAt": "2026-10-27T10:56:12.942Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S11": {
+          "status": "done",
+          "doneAt": "2026-10-27T10:59:49.392Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-10-27T10:56:13.917Z"
+  "lastUpdated": "2026-10-27T10:59:50.411Z"
 }
