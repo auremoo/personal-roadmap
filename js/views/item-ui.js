@@ -44,7 +44,7 @@ export function renderItemRow(slug, item, { blocks, week = null, showWeek = fals
           ${showWeek && week ? `<span>Semaine ${week.number}</span>` : ''}
           ${late ? '<span class="flag flag--late">en retard</span>' : ''}
           ${item.movedFrom != null ? `<span class="flag flag--moved">reporté de la semaine ${item.movedFrom}</span>` : ''}
-          ${st.note ? `<span class="flag flag--note">${ICONS.note} note</span>` : ''}
+          ${st.note ? `<span class="flag flag--note" title="${esc(st.note)}">${ICONS.note}<span class="flag__text">${esc(st.note)}</span></span>` : ''}
         </div>
       </div>
       <div class="item-row__actions">${statusRounds(status)}</div>

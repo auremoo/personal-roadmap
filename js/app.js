@@ -27,6 +27,7 @@ const ROUTES = [
   { re: /^\/project\/([\w-]+)$/,                                 fn: m => mountProject(app, m[1], 'plan') },
   { re: /^\/project\/([\w-]+)\/(plan|progress|versions|infos)$/, fn: m => mountProject(app, m[1], m[2]) },
   { re: /^\/project\/([\w-]+)\/edit$/,                           fn: m => mountProjectForm(app, m[1]) },
+  { re: /^\/project\/([\w-]+)\/duplicate$/,                      fn: m => mountProjectForm(app, null, { from: m[1] }) },
 ];
 
 let _lastPath = '/';

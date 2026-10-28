@@ -1,7 +1,7 @@
 // Calculs d'avancement partagés par les vues (accueil, sidebar, plan, avancement, prompts).
 
 import { getActivePlan, getItemStates, getMoves, getProjectMeta } from '../store.js';
-import { today, daysBetween } from './dates.js';
+import { today, daysBetween, mondayOf } from './dates.js';
 
 // Semaines "effectives" : les items déplacés (state.moves) sont rangés dans leur semaine cible.
 export function effectiveWeeks(plan, moves = {}) {
@@ -105,4 +105,28 @@ export function blockMap(plan) {
 
 export function isActiveProject(slug) {
   return (getProjectMeta(slug)?.status || 'active') === 'active';
+}
+
+// Charge par semaine calendaire (lundi), tous projets actifs confondus, en items :
+// faits, sautés, à rattraper (semaine passée non traitée), à faire.
+export function weeklyLoad(slugs, todayStr = today()) {
+  const byMonday = new Map();
+  for (const slug of slugs) {
+    if (!getActivePlan(slug)) continue;
+    const states = getItemStates(slug);
+    for (const w of projectWeeks(slug)) {
+      if (!w.start) continue;
+      const m = mondayOf(w.start);
+      const col = byMonday.get(m) || { monday: m, done: 0, skipped: 0, late: 0, todo: 0 };
+      for (const it of w.items) {
+        const st = states[it.id]?.status;
+        if (st === 'done') col.done++;
+        else if (st === 'skipped') col.skipped++;
+        else if (w.end < todayStr) col.late++;
+        else col.todo++;
+      }
+      byMonday.set(m, col);
+    }
+  }
+  return [...byMonday.values()].sort((a, b) => a.monday.localeCompare(b.monday));
 }

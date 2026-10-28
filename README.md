@@ -22,11 +22,11 @@ Fonctionne sans serveur : toutes les données sont stockées dans ce dépôt Git
 | Écran | Contenu |
 |---|---|
 | Accueil | La semaine en cours de chaque projet actif, cochable sur place, et le nombre d'items à rattraper |
-| Projets | Tous les projets (actifs, en pause, terminés) |
+| Projets | Charge par semaine (items faits, sautés, à rattraper, à faire, tous projets actifs), puis tous les projets (actifs, en pause, terminés) |
 | Projet › Plan | Frise des semaines + items de la semaine ; recherche, filtre par bloc ou « à rattraper » |
 | Projet › Avancement | Indicateurs, histogramme par semaine, avancement par bloc, livrables à cocher |
 | Projet › Versions | Prompts IA, import, historique des versions |
-| Projet › Infos | Fiche du projet (modifiable) et sections libres de la roadmap (cadre, points à vérifier, sources) |
+| Projet › Infos | Fiche du projet (modifiable), « Repartir de ce projet » (nouveau projet prérempli, la roadmap actuelle peut servir de matière pour l'IA) et sections libres de la roadmap (cadre, points à vérifier, sources) |
 | Réglages | Profil injecté dans les prompts, déconnexion |
 
 **Ordinateur (≥ 900 px)** : sidebar permanente, onglets sous l'en-tête, frise verticale des semaines, détail d'un item en tiroir à droite. Raccourcis dans le plan : `←` `→` changer de semaine (ou d'item dans le détail), `/` chercher, et sur un item sélectionné (Tab) : `Entrée` ouvrir, `Espace` fait, `X` sauté, `Échap` fermer.

@@ -1,8 +1,8 @@
 // Liste des projets + création.
 
 import { getProjects, getProjectMeta } from '../store.js';
-import { projectSummary } from '../utils/progress.js';
-import { formatDateShort } from '../utils/dates.js';
+import { projectSummary, weeklyLoad, isActiveProject } from '../utils/progress.js';
+import { formatDateShort, mondayOf, today } from '../utils/dates.js';
 import { esc, progressBar, ICONS } from '../utils/ui.js';
 import { topbar, globalTabBar } from './chrome.js';
 
@@ -18,6 +18,7 @@ export function mount(container) {
     <div class="view">
       ${topbar({ title: 'Projets', actions: `<button class="btn btn--primary btn--sm" data-nav="/new-project">${ICONS.plus}<span>Nouveau</span></button>` })}
       <main class="page">
+        ${loadCard(sorted.filter(p => isActiveProject(p.slug)).map(p => p.slug))}
         ${sorted.length ? `<div class="project-grid">${sorted.map(projectCard).join('')}</div>` : `
           <div class="empty-state">
             <div class="empty-state__icon">🗺️</div>
@@ -52,4 +53,39 @@ function projectCard(p) {
         </div>
         ${s.overdue.length ? `<div class="small late-text">${s.overdue.length} à rattraper</div>` : ''}` : ''}
     </article>`;
+}
+
+// Charge par semaine, tous projets actifs : faits / sautés / à rattraper / à faire
+function loadCard(slugs) {
+  const cols = weeklyLoad(slugs);
+  if (!cols.length) return '';
+  const cur = mondayOf(today());
+  const max = Math.max(1, ...cols.map(c => c.done + c.skipped + c.late + c.todo));
+  const step = Math.max(1, Math.ceil(cols.length / 6));
+  const seg = (n, cls) => n ? `<div class="load__seg load__seg--${cls}" style="height:${n / max * 100}%"></div>` : '';
+  return `
+    <section class="card load-card">
+      <div class="card__heading-row">
+        <h2 class="card__heading">Charge par semaine</h2>
+        <span class="muted small">en items, projets actifs</span>
+      </div>
+      <div class="load">
+        ${cols.map((c, i) => {
+          const total = c.done + c.skipped + c.late + c.todo;
+          return `
+          <div class="load__col ${c.monday === cur ? 'load__col--current' : ''}"
+               title="Semaine du ${formatDateShort(c.monday)} : ${c.done} fait${c.done > 1 ? 's' : ''}, ${c.skipped} sauté${c.skipped > 1 ? 's' : ''}${c.late ? `, ${c.late} à rattraper` : ''}${c.todo ? `, ${c.todo} à faire` : ''}">
+            <div class="load__count">${total || ''}</div>
+            <div class="load__bar">${seg(c.todo, 'todo')}${seg(c.late, 'late')}${seg(c.skipped, 'skipped')}${seg(c.done, 'done')}</div>
+            <div class="load__label">${i % step === 0 ? formatDateShort(c.monday) : ''}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="legend legend--wrap">
+        <span><i class="dot dot--done"></i>Faits</span>
+        <span><i class="dot dot--skipped"></i>Sautés</span>
+        <span><i class="dot" style="background:var(--ios-red)"></i>À rattraper</span>
+        <span><i class="dot" style="background:var(--ios-blue)"></i>À faire</span>
+      </div>
+    </section>`;
 }

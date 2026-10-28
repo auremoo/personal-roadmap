@@ -1,16 +1,19 @@
 // Création (/new-project) et modification (/project/:slug/edit) d'un projet.
 
-import { createProject, updateProject, getProjectMeta, importPlanVersion } from '../store.js';
+import { createProject, updateProject, getProjectMeta, importPlanVersion, getActivePlanRaw } from '../store.js';
 import { parseRoadmap, isRoadmapMarkdown, stripFence } from '../parser.js';
 import { navigate, showToast, refreshSidebar } from '../app.js';
-import { weeksBetween, mondayOf, addDays } from '../utils/dates.js';
+import { weeksBetween, mondayOf, addDays, today } from '../utils/dates.js';
 import { esc } from '../utils/ui.js';
 import { topbar } from './chrome.js';
 
-export function mount(container, slug) {
+// from : projet dont on reprend la fiche (« Repartir de ce projet »), sans avancement ni versions
+export function mount(container, slug, { from = null } = {}) {
   const editing = !!slug;
-  const meta = editing ? getProjectMeta(slug) : {};
+  const source = from ? getProjectMeta(from) : null;
+  const meta = editing ? getProjectMeta(slug) : source ? sourceMeta(source) : {};
   if (editing && !meta) { navigate('/projects'); return; }
+  const sourcePlan = source ? getActivePlanRaw(from) : null;
 
   const field = (id, label, { type = 'text', value = '', placeholder = '', hint = '', required = false, attrs = '' } = {}) => `
     <div class="form-group">
@@ -24,12 +27,14 @@ export function mount(container, slug) {
   container.innerHTML = `
     <div class="view">
       ${topbar({
-        title: editing ? 'Modifier le projet' : 'Nouveau projet',
+        title: editing ? 'Modifier le projet' : source ? 'Repartir d\'un projet' : 'Nouveau projet',
         back: editing ? { label: 'Projet', path: `/project/${slug}/infos` } : { label: 'Projets', path: '/projects' },
       })}
       <main class="page page--narrow">
         <form id="project-form" class="form" autocomplete="off">
-          ${editing ? '' : `
+          ${source ? `
+          <p class="hint">Fiche reprise de « ${esc(source.name)} » : ajuste le nom, les dates et le contexte. L'avancement et les versions ne sont pas copiés ; la roadmap se génère ensuite avec le prompt initial.</p>` : ''}
+          ${editing || source ? '' : `
           <section class="card import-card">
             <h2 class="card__heading">Tu as déjà une roadmap (.md) ?</h2>
             <p class="muted small">Le formulaire est pré-rempli à partir de sa section META, et elle est importée comme version 1 à la création du projet.</p>
@@ -71,6 +76,11 @@ export function mount(container, slug) {
 
           <section class="card">
             ${field('draft', 'Matière existante (facultatif)', { type: 'textarea', value: meta.draft, placeholder: 'Colle ici un brouillon de roadmap, des notes… Il sera repris dans le prompt initial.', attrs: 'rows="8"' })}
+            ${sourcePlan ? `
+              <label class="check-row">
+                <input type="checkbox" id="include-plan">
+                <span>Ajouter la roadmap actuelle de « ${esc(source.name)} » (v${source.activeVersion}) à la matière existante, pour que l'IA s'en inspire</span>
+              </label>` : ''}
           </section>
 
           <div class="form-actions">
@@ -121,6 +131,7 @@ export function mount(container, slug) {
 
   // Identifiant auto tant que l'utilisateur ne l'a pas modifié
   let slugTouched = false;
+  if (source) $('slug').value = slugify(meta.name);
   $('slug')?.addEventListener('input', () => { slugTouched = true; });
   $('name').addEventListener('input', () => {
     if (!editing && !slugTouched) $('slug').value = slugify($('name').value);
@@ -155,6 +166,9 @@ export function mount(container, slug) {
       constraints: $('constraints').value.trim(),
       draft: $('draft').value.trim(),
     };
+    if (sourcePlan && $('include-plan')?.checked) {
+      data.draft = [data.draft, `Roadmap du projet « ${source.name} » (v${source.activeVersion}), à reprendre et adapter :\n\n${sourcePlan.trim()}`].filter(Boolean).join('\n\n---\n\n');
+    }
     if (!data.name) { showToast('Le nom est obligatoire', 'error'); return; }
 
     const btn = $('save-btn');
@@ -189,4 +203,16 @@ export function mount(container, slug) {
 function slugify(s) {
   return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+}
+
+// Fiche d'un nouveau projet repris d'un autre : même durée, à partir du lundi qui vient
+function sourceMeta(src) {
+  const start = addDays(mondayOf(today()), 7);
+  const weeks = src.weeks || (src.startDate && src.endDate ? weeksBetween(src.startDate, src.endDate) : null);
+  return {
+    name: `${src.name} (suite)`,
+    objective: src.objective, context: src.context, rhythm: src.rhythm,
+    constraints: src.constraints, draft: src.draft,
+    startDate: start, weeks, endDate: weeks ? addDays(start, weeks * 7 - 1) : '',
+  };
 }

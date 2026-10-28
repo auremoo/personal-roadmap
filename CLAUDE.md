@@ -22,17 +22,17 @@ js/views/
   chrome.js           topbar() + globalTabBar()
   sidebar.js          sidebar ordinateur
   home.js             semaine en cours de chaque projet actif
-  projects.js         liste des projets
+  projects.js         liste des projets + « Charge par semaine » (items faits / sautés / à rattraper / à faire, projets actifs)
   project.js          conteneur d'un projet (onglets plan/progress/versions/infos)
   plan-view.js        frise des semaines + semaine sélectionnée, recherche, filtre, raccourcis ← → /
   progress-view.js    KPI, histogramme hebdo, blocs, livrables
   versions-view.js    prompts, import (collage/fichier/glisser-déposer), historique
   infos-view.js       fiche projet + sections libres de la roadmap
-  project-form.js     création / modification d'un projet ; création possible depuis un .md (META → formulaire, import en v1)
+  project-form.js     création / modification d'un projet ; création possible depuis un .md (META → formulaire, import en v1) ; « Repartir de ce projet » (/project/:slug/duplicate) : fiche reprise, même durée à partir du lundi suivant, roadmap active ajoutable à la matière existante
   settings.js         profil (profile.json) + déconnexion
-  item-ui.js          ligne d'item (deux ronds : ✓ fait / ✕ sauté, vides = à faire) + panneau de détail (statut, note, report)
+  item-ui.js          ligne d'item (deux ronds : ✓ fait / ✕ sauté, vides = à faire ; début de la note affiché) + panneau de détail (statut, note, report)
 js/utils/
-  progress.js         effectiveWeeks (applique les déplacements), currentWeek, countStatus, isOverdue/overdueItems (« à rattraper »), paceOf (prompt de révision), projectSummary
+  progress.js         weeklyLoad (charge par semaine calendaire, tous projets), effectiveWeeks (applique les déplacements), currentWeek, countStatus, isOverdue/overdueItems (« à rattraper »), paceOf (prompt de révision), projectSummary
   prompts.js          buildInitialPrompt / buildRevisionPrompt / formatTemplate
   ui.js               esc, openSheet (feuille mobile / tiroir ordinateur), openPromptModal, ICONS
   dates.js, markdown.js, crypto.js (repris de Pacing)
@@ -57,4 +57,5 @@ Aucun fichier n'est requis au démarrage : un dépôt vierge démarre sur un ét
 - Synchro `state.json` regroupée (600 ms), vidée immédiatement quand l'app passe en arrière-plan ; SHA relu avant chaque PUT.
 - `version` est enregistrée à chaque changement de statut : deux versions peuvent réutiliser un même ID d'item.
 - sessionStorage : `roadmap_auth`, `roadmap_pat` (distinctes de Pacing, même origine `auremoo.github.io`).
+- Mode sombre : variables de tokens.css + bloc « Mode sombre : contrastes » en fin de components.css (pastilles, boutons secondaires).
 - Le sel PBKDF2 (`pacing-app-v1`) est volontairement identique à Pacing : un token chiffré est réutilisable d'une app à l'autre.

@@ -25,7 +25,10 @@ export function mount(container, slug) {
       <section class="card">
         <div class="card__heading-row">
           <h2 class="card__heading">Projet</h2>
-          <button class="btn btn--secondary btn--sm" data-nav="/project/${slug}/edit">Modifier</button>
+          <div class="row-inline">
+            <button class="btn btn--ghost btn--sm" data-nav="/project/${slug}/duplicate" title="Nouveau projet prérempli à partir de celui-ci">Repartir de ce projet</button>
+            <button class="btn btn--secondary btn--sm" data-nav="/project/${slug}/edit">Modifier</button>
+          </div>
         </div>
         <dl class="facts">
           ${rows.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v).replace(/\n/g, '<br>')}</dd>`).join('')}

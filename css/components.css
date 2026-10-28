@@ -1083,3 +1083,38 @@ select.input-field {
 @media (min-width: 1400px) {
   .plan-layout { grid-template-columns: 320px 1fr; }
 }
+
+/* ─── Charge par semaine (page Projets) ───────────────────────── */
+
+.load-card { margin-bottom: var(--space-4); }
+.load { display: flex; align-items: flex-end; gap: 3px; height: 150px; padding: 0 12px; overflow-x: auto; scrollbar-width: none; }
+.load::-webkit-scrollbar { display: none; }
+.load__col { flex: 1 1 0; min-width: 12px; height: 100%; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.load__count { font-size: 10px; color: var(--text-secondary); font-variant-numeric: tabular-nums; height: 12px; }
+.load__bar { flex: 1; width: 100%; max-width: 30px; display: flex; flex-direction: column; justify-content: flex-end; border-radius: 4px; overflow: hidden; }
+.load__seg--done { background: var(--st-done); }
+.load__seg--skipped { background: var(--st-skipped); }
+.load__seg--late { background: var(--ios-red); opacity: 0.8; }
+.load__seg--todo { background: var(--ios-blue); opacity: 0.35; }
+.load__col--current .load__seg--todo { opacity: 0.7; }
+.load__label { font-size: 10px; color: var(--text-secondary); white-space: nowrap; height: 12px; width: 100%; display: flex; justify-content: center; overflow: visible; }
+.load__col--current .load__label, .load__col--current .load__count { color: var(--ios-blue); font-weight: 700; }
+.legend--wrap { flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
+
+/* ─── Note d'un item, repartir d'un projet ────────────────────── */
+
+.flag--note { min-width: 0; max-width: 100%; }
+.flag__text { font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-inline { display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: flex-end; }
+.check-row { display: flex; gap: var(--space-3); align-items: flex-start; font-size: 14px; line-height: 1.4; margin-top: var(--space-3); cursor: pointer; }
+.check-row input { -webkit-appearance: checkbox; appearance: auto; margin-top: 2px; accent-color: var(--ios-blue); width: 18px; height: 18px; flex-shrink: 0; }
+.flag--note svg { flex-shrink: 0; }
+
+/* ─── Mode sombre : contrastes ────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  .pill--ok { background: rgba(48, 209, 88, 0.18); color: #4ADE80; }
+  .pill--warn { background: rgba(255, 159, 10, 0.2); color: #FFB340; }
+  .pill--bad { background: rgba(255, 69, 58, 0.2); color: #FF6961; }
+  .btn--secondary { background: #3A3A3C; }
+}
