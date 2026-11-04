@@ -105,12 +105,13 @@
           "status": "done",
           "doneAt": "2026-11-04T13:25:15.405Z",
           "skippedAt": null,
-          "version": 1
+          "version": 1,
+          "note": "J'ai juste envoyé un mail à"
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-11-04T13:25:16.538Z"
+  "lastUpdated": "2026-11-04T13:25:24.626Z"
 }
