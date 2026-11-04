@@ -107,11 +107,23 @@
           "skippedAt": null,
           "version": 1,
           "note": "J'ai juste envoyé un mail à Simon Allard qui sera mon référent, et pas Jacklin finalement."
+        },
+        "S30": {
+          "status": "done",
+          "doneAt": "2026-11-04T14:44:25.523Z",
+          "skippedAt": null,
+          "version": 1
+        },
+        "S27": {
+          "status": "done",
+          "doneAt": "2026-11-04T14:44:26.658Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-11-04T13:27:16.651Z"
+  "lastUpdated": "2026-11-04T14:44:26.751Z"
 }
