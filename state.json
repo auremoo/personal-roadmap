@@ -100,11 +100,17 @@
           "doneAt": "2026-10-28T09:09:42.131Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S25": {
+          "status": "done",
+          "doneAt": "2026-11-04T13:25:15.405Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-10-28T09:09:43.408Z"
+  "lastUpdated": "2026-11-04T13:25:16.538Z"
 }
