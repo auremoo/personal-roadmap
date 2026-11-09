@@ -125,11 +125,23 @@
           "doneAt": "2026-11-04T14:44:28.084Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S35": {
+          "status": "done",
+          "doneAt": "2026-11-09T14:33:35.078Z",
+          "skippedAt": null,
+          "version": 1
+        },
+        "S32": {
+          "status": "done",
+          "doneAt": "2026-11-09T14:33:36.048Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-11-04T14:44:29.166Z"
+  "lastUpdated": "2026-11-09T14:33:36.300Z"
 }
