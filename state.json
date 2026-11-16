@@ -143,11 +143,23 @@
           "doneAt": "2026-11-09T14:33:36.800Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S36": {
+          "status": "done",
+          "doneAt": "2026-11-16T14:28:46.602Z",
+          "skippedAt": null,
+          "version": 1
+        },
+        "S40": {
+          "status": "done",
+          "doneAt": "2026-11-16T14:28:47.297Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-11-09T14:33:38.397Z"
+  "lastUpdated": "2026-11-16T14:28:48.039Z"
 }
