@@ -155,11 +155,17 @@
           "doneAt": "2026-11-16T14:28:47.297Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S37": {
+          "status": "done",
+          "doneAt": "2026-11-17T15:30:19.767Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-11-16T14:28:50.294Z"
+  "lastUpdated": "2026-11-17T15:30:21.239Z"
 }
