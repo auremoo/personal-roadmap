@@ -161,11 +161,17 @@
           "doneAt": "2026-11-17T15:30:19.767Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S41": {
+          "status": "done",
+          "doneAt": "2026-11-23T16:33:41.475Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-11-17T15:30:21.239Z"
+  "lastUpdated": "2026-11-23T16:33:42.338Z"
 }
