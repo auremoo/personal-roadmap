@@ -185,11 +185,17 @@
           "doneAt": "2026-11-24T15:18:54.695Z",
           "skippedAt": null,
           "version": 1
+        },
+        "S14": {
+          "status": "done",
+          "doneAt": "2026-11-25T18:28:26.776Z",
+          "skippedAt": null,
+          "version": 1
         }
       },
       "deliverables": {},
       "moves": {}
     }
   },
-  "lastUpdated": "2026-11-24T15:18:55.752Z"
+  "lastUpdated": "2026-11-25T18:28:27.926Z"
 }
